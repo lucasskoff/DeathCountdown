@@ -19,6 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
 public class MainActivity extends AppCompatActivity {
+    private static final Integer INIT_TIME = 30000;
+    private static final Integer INTERVAL = 1000;
     public int counter;
     Button button;
     TextView textView;
@@ -29,13 +31,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         button= (Button) findViewById(R.id.button);
         textView= (TextView) findViewById(R.id.textView);
+        Integer initialTime = INIT_TIME / INTERVAL;
+        String initialTimerText = String.valueOf(initialTime);
+        textView.setText(initialTimerText);
         button.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v) {
-                new CountDownTimer(30000, 1000){
+                new CountDownTimer(INIT_TIME, INTERVAL){
+                    private final Integer DISPLAY_INITIAL_TIME = INIT_TIME / INTERVAL;
                     public void onTick(long millisUntilFinished){
-                        textView.setText(String.valueOf(counter));
+                        textView.setText(String.valueOf(DISPLAY_INITIAL_TIME - counter));
                         counter++;
                     }
                     public  void onFinish(){
