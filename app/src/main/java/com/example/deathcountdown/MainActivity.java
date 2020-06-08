@@ -31,24 +31,38 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         button= (Button) findViewById(R.id.button);
         textView= (TextView) findViewById(R.id.textView);
-        Integer initialTime = INIT_TIME / INTERVAL;
-        String initialTimerText = String.valueOf(initialTime);
-        textView.setText(initialTimerText);
+        int hoursToGo = 6;
+        int minutesToGo = 25;
+        int secondsToGo = 30;
+
+        final long millisToGo = secondsToGo*1000+minutesToGo*1000*60+hoursToGo*1000*60*60;
+        setClockText(millisToGo);
         button.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v) {
-                new CountDownTimer(INIT_TIME, INTERVAL){
+                button.setEnabled(false);
+                new CountDownTimer(millisToGo, INTERVAL){
                     private final Integer DISPLAY_INITIAL_TIME = INIT_TIME / INTERVAL;
+                    @Override
                     public void onTick(long millisUntilFinished){
-                        textView.setText(String.valueOf(DISPLAY_INITIAL_TIME - counter));
+                        setClockText(millisUntilFinished);
                         counter++;
                     }
+                    @Override
                     public  void onFinish(){
-                        textView.setText("FINISH!!");
+                        textView.setText("YOU DIED!!");
                     }
                 }.start();
             }
         });
+    }
+
+    public void setClockText(long millisUntilFinished) {
+        int seconds = (int) (millisUntilFinished / 1000) % 60 ;
+        int minutes = (int) ((millisUntilFinished / (1000*60)) % 60);
+        int hours   = (int) ((millisUntilFinished / (1000*60*60)) % 24);
+        String text = String.format("%02d hours, %02d minutes, %02d seconds",hours,minutes,seconds);
+        textView.setText(text);
     }
 }
