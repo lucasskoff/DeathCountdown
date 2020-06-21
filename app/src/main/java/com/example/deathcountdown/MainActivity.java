@@ -99,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                button.setEnabled(false);
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
