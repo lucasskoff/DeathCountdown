@@ -1,5 +1,6 @@
 package com.example.deathcountdown;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,20 +20,25 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
-public class StartUpScreen extends AppCompatActivity {
+public class StartUpScreen extends AppCompatActivity implements View.OnClickListener {
     private static final Integer INTERVAL = 1000;
     public File projFile;
-    Button button;
+    Button showTimerButton;
     TextView textView;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        button= (Button) findViewById(R.id.button);
-        textView= (TextView) findViewById(R.id.textView);
+    private void setupLayout() {
+        Button takeSurvey = (Button) findViewById(R.id.take_survey);
+        takeSurvey.setOnClickListener(this);
 
+        Button manualInput = (Button) findViewById(R.id.about_us);
+        manualInput.setOnClickListener(this);
+
+        Button showTimer = (Button) findViewById(R.id.show_timer);
+        showTimer.setOnClickListener(this);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void setUpTimer() {
         int year = 2080;
         int month = 7;
         int day = 6;
@@ -72,15 +78,18 @@ public class StartUpScreen extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        showTimerButton= (Button) findViewById(R.id.show_timer);
+        textView= (TextView) findViewById(R.id.textView);
+
         final LocalDateTime endDate = LocalDateTime.of(year, month, day, hour, minute, second);
 
         textView.setText(calculateRemainingTime(LocalDateTime.now(), endDate));
 
         //This will re-calculate and display the remaining time every second
-        button.setOnClickListener(new View.OnClickListener() {
+        showTimerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                button.setEnabled(false);
+                showTimerButton.setEnabled(false);
                 final Handler handler = new Handler();
                 handler.postDelayed(new Runnable() {
                     @Override
@@ -91,6 +100,37 @@ public class StartUpScreen extends AppCompatActivity {
                 }, INTERVAL);
             }
         });
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent;
+        switch (view.getId()) {
+            case R.id.take_survey:
+                intent = new Intent(this, Questionaire.class);
+                startActivity(intent);
+                onDestroy();
+                break;
+            case R.id.about_us:
+                intent = new Intent(this, AboutUs.class);
+                startActivity(intent);
+                onDestroy();
+                break;
+            case R.id.show_timer:
+                break;
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+
+        setupLayout();
+        setUpTimer();
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
