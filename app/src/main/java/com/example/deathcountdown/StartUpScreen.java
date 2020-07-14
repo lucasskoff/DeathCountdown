@@ -27,11 +27,11 @@ public class StartUpScreen extends AppCompatActivity implements View.OnClickList
     TextView textView;
 
     private void setupLayout() {
-        Button takeSurvey = (Button) findViewById(R.id.take_survey);
-        takeSurvey.setOnClickListener(this);
+        Button questionnaire = (Button) findViewById(R.id.take_survey);
+        questionnaire.setOnClickListener(this);
 
-        Button manualInput = (Button) findViewById(R.id.about_us);
-        manualInput.setOnClickListener(this);
+        Button macabre = (Button) findViewById(R.id.about_us);
+        macabre.setOnClickListener(this);
 
         Button showTimer = (Button) findViewById(R.id.show_timer);
         showTimer.setOnClickListener(this);
