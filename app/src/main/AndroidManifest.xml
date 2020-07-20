@@ -14,7 +14,7 @@
             android:label="@string/title_activity_about_us"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
-            android:name=".Questionaire"
+            android:name=".Questionnaire"
             android:label="@string/take_survey"
             android:theme="@style/AppTheme.NoActionBar" />
 

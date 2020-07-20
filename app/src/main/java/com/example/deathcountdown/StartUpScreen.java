@@ -107,7 +107,7 @@ public class StartUpScreen extends AppCompatActivity implements View.OnClickList
         Intent intent;
         switch (view.getId()) {
             case R.id.take_survey:
-                intent = new Intent(this, Questionaire.class);
+                intent = new Intent(this, Questionnaire.class);
                 startActivity(intent);
                 onDestroy();
                 break;

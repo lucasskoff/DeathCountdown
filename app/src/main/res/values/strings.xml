@@ -32,9 +32,8 @@
         "Your time is ticking, too. \n\n"
         "We hope you'll live abundantly.\n"
     </string>
-    <string name="large_text">
-        "What is your birthday"
-    </string>
+    <string name="large_text">What is your birthday</string>
+    <string name="calendar_submit">Submit</string>
     <string name="title_activity_disclaimer">Obvious Disclaimer</string>
     <string name="title_activity_about_us">Isn\'t that a little macabre?</string>
     <!-- Strings used for fragments for navigation -->
