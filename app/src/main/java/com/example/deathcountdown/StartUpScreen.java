@@ -127,7 +127,6 @@ public class StartUpScreen extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         setupLayout();
         setUpTimer();
 
