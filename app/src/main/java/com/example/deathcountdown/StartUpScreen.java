@@ -107,7 +107,7 @@ public class StartUpScreen extends AppCompatActivity implements View.OnClickList
         Intent intent;
         switch (view.getId()) {
             case R.id.take_survey:
-                intent = new Intent(this, Questionaire.class);
+                intent = new Intent(this, Questionnaire.class);
                 startActivity(intent);
                 onDestroy();
                 break;
@@ -126,7 +126,6 @@ public class StartUpScreen extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         setupLayout();
         setUpTimer();
