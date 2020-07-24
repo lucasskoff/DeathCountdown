@@ -33,12 +33,13 @@ public class StartUpScreen extends AppCompatActivity implements View.OnClickList
         Button macabre = (Button) findViewById(R.id.about_us);
         macabre.setOnClickListener(this);
 
-        Button showTimer = (Button) findViewById(R.id.show_timer);
-        showTimer.setOnClickListener(this);
+        Button disclaimer = (Button) findViewById(R.id.disclaimer);
+        disclaimer.setOnClickListener(this);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void setUpTimer() {
+        textView= (TextView) findViewById(R.id.textView);
         int year = 2080;
         int month = 7;
         int day = 6;
@@ -46,60 +47,39 @@ public class StartUpScreen extends AppCompatActivity implements View.OnClickList
         int minute = 30;
         int second = 20;
 
+        String dirPath = getFilesDir().getAbsolutePath() + File.separator + "timeLeft";
+        projFile = new File(dirPath + File.separator + "timeLeft.txt");
+        projFile.delete();
+        if(!projFile.exists()) {
+            return;
+        }
         try {
-            String dirPath = getFilesDir().getAbsolutePath() + File.separator + "timeLeft";
-            File projDir = new File(dirPath);
-            if (!projDir.exists())
-                projDir.mkdirs();
-            projFile = new File(dirPath + File.separator + "timeLeft.txt");
-            if(projFile.exists()) {
-                projFile.delete();
-            }
-            if(!projFile.exists()) {
-                projFile.createNewFile();
-                BufferedWriter writer = new BufferedWriter(new FileWriter(projFile));
-                String csv = year + "," + month + "," + day +"," + hour + "," + minute + "," + second;
-                writer.write(csv);
-                writer.close();
-            }
             BufferedReader brTest = new BufferedReader(new FileReader(projFile));
             String text = brTest.readLine();
             if(text != null) {
                 String[] strArray = text.split(",");
-                year = Integer.valueOf(strArray[0]);
-                month = Integer.valueOf(strArray[1]);
-                day = Integer.valueOf(strArray[2]);
-                hour = Integer.valueOf(strArray[3]);
-                minute = Integer.valueOf(strArray[4]);
-                second = Integer.valueOf(strArray[5]);
+                year = Integer.parseInt(strArray[0]);
+                month = Integer.parseInt(strArray[1]);
+                day = Integer.parseInt(strArray[2]);
+                hour = Integer.parseInt(strArray[3]);
+                minute = Integer.parseInt(strArray[4]);
+                second = Integer.parseInt(strArray[5]);
             }
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        showTimerButton= (Button) findViewById(R.id.show_timer);
-        textView= (TextView) findViewById(R.id.textView);
-
         final LocalDateTime endDate = LocalDateTime.of(year, month, day, hour, minute, second);
 
         textView.setText(calculateRemainingTime(LocalDateTime.now(), endDate));
-
-        //This will re-calculate and display the remaining time every second
-        showTimerButton.setOnClickListener(new View.OnClickListener() {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
             @Override
-            public void onClick(View v) {
-                showTimerButton.setEnabled(false);
-                final Handler handler = new Handler();
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        textView.setText(calculateRemainingTime(LocalDateTime.now(), endDate));
-                        handler.postDelayed(this, INTERVAL);
-                    }
-                }, INTERVAL);
+            public void run() {
+                textView.setText(calculateRemainingTime(LocalDateTime.now(), endDate));
+                handler.postDelayed(this, INTERVAL);
             }
-        });
+            }, INTERVAL);
     }
 
     @Override
@@ -115,8 +95,6 @@ public class StartUpScreen extends AppCompatActivity implements View.OnClickList
                 intent = new Intent(this, AboutUs.class);
                 startActivity(intent);
                 onDestroy();
-                break;
-            case R.id.show_timer:
                 break;
         }
     }
