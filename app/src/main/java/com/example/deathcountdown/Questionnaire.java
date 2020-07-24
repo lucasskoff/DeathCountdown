@@ -66,7 +66,7 @@ public class Questionnaire extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         try{
-            //get the date from the text box and switch screens
+            //get the date from the calendar and switch screens
             String dirPath = getFilesDir().getAbsolutePath() + File.separator + "timeLeft";
             File projDir = new File(dirPath);
             if (!projDir.exists()) {
@@ -79,6 +79,7 @@ public class Questionnaire extends AppCompatActivity implements View.OnClickList
             long date = calendarView.getDate();
 
             LocalDateTime localDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(date), ZoneId.systemDefault());
+            localDateTime = localDateTime.plusYears(80);
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy,MM,dd,hh,mm,ss");
             String formattedDate = localDateTime.format(formatter);
 

@@ -49,7 +49,7 @@ public class StartUpScreen extends AppCompatActivity implements View.OnClickList
 
         String dirPath = getFilesDir().getAbsolutePath() + File.separator + "timeLeft";
         projFile = new File(dirPath + File.separator + "timeLeft.txt");
-        projFile.delete();
+//        projFile.delete();
         if(!projFile.exists()) {
             return;
         }
