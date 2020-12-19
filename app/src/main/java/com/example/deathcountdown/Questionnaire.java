@@ -95,7 +95,7 @@ public class Questionnaire extends AppCompatActivity implements View.OnClickList
         }
         Intent intent = new Intent(this, StartUpScreen.class);
         startActivity(intent);
-        onDestroy();
+        finish();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
